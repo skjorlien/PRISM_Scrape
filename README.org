@@ -1,3 +1,9 @@
 #+title: Scraping Prism Data
 #+date: [2025-09-08 Mon]
 
+In September 2025, PRISM switched to a different FTP structure with GEOTIFFs.
+
+I set this repo up to
+1. download all precipitation, max temp and min temp at 4km daily resolution for the continental US.
+2. setup a cron job to run periodically so I always have the latest daily temperature data.
+3. Incorporate a couple of post-processing scripts to aggregate given a set of shapefiles. 
