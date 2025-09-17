@@ -1,5 +1,5 @@
 #+title: Scraping Prism Data
-#+date: [2025-09-08 Mon]
+#+date: [2025-09-16 Tue]
 
 In September 2025, PRISM switched to a different FTP structure with GEOTIFFs.
 
@@ -7,3 +7,29 @@ I set this repo up to
 1. download all precipitation, max temp and min temp at 4km daily resolution for the continental US.
 2. setup a cron job to run periodically so I always have the latest daily temperature data.
 3. Incorporate a couple of post-processing scripts to aggregate given a set of shapefiles. 
+
+
+* Code Overview
+** =settings.py=
+Defines the directory that all the stuff will be saved to. I currently have it at =~/Data/PRISM=, but one could override the ~Dirs~ object to change.
+- ~Dirs.output~ points to where the raw raster files will be saved.
+- ~Dirs.clean~ points to where the
+- ~SHAPEFILE_PATH~ points to the polygon shapefile that you would use to aggregate data over. Mine points to a finely defined 2023 county shapefile, but this could be anything.
+** =models.py=
+Just defines some enums for the Variables of interest and the scope. Really, I'm just interested in daily data for min max and precip.
+** =scrape.py=
+Currently set up to download ~TMIN~, ~TMAX~, ~PPT~ for years 2015-2025 (inclusive) 
+** =postprocess.py=
+Processes raster data by date, clips them by the shapefile defined in =settings.py=, and aggregates them into a set of parquet files. This is nice because you can load all parquet files as one with:
+
+#+begin_src python
+df = pd.read_parquet(Dir.clean)
+# where Dirs.clean is from the settings.py 
+#+end_src
+
+Column names of the parquet file:
+- FIPS :: concatenated stateid and county id,
+- GEOID :: turns out this is redundant. My shapefile came from TIGER, and I guess GEOID is the same as fip.
+- ppt :: PRISM data on precipitation averaged over county x day
+- tmin :: PRISM data on min temp averaged over county x day
+- ppt :: PRISM data on max temp averaged over county x day

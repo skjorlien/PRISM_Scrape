@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from pathlib import Path
 
 # for example:
-# https://ftp.prism.oregonstate.edu/time_series/us/an/4km/tmax/daily/
+# https://ftp.prism.oregonstate.edu/time_series/us/an/4km/tmean/daily/
 #
 
 HOST = "prism.oregonstate.edu"
@@ -18,6 +18,13 @@ def get_repo_root():
     raise RuntimeError("No .git directory found in any parent folder.")
 
 
+SHAPEFILE_PATH = "/home/skjor/Data/Shapefiles/US/County/cb_2023_us_county_5m.zip"
+
+
 @dataclass
 class Dirs:
     output: Path = Path.home() / "Data" / "PRISM"
+    clean: Path = Path.home() / "Data" / "PRISM" / "prism_clean"
+
+
+Dirs.clean.mkdir(parents=True, exist_ok=True)

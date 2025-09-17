@@ -28,8 +28,8 @@ def download_prism(var: Variable, scope: TimeStep, year):
 
 
 if __name__ == "__main__":
-    years = range(2015, 2026)
+    years = range(2013, 2026)
 
     for var in Variable:
-        for y in range(2015, 2026):
+        for y in years:
             download_prism(var, TimeStep.DAILY, y)
