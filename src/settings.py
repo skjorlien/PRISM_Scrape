@@ -8,6 +8,8 @@ from pathlib import Path
 HOST = "prism.oregonstate.edu"
 FTP_PATH = "time_series/us/an/4km"
 
+# I don't use this for this project, but nifty if you want to replace Path.home() with the repo root
+
 
 def get_repo_root():
     """Find the nearest parent directory containing a .git folder."""
@@ -18,7 +20,8 @@ def get_repo_root():
     raise RuntimeError("No .git directory found in any parent folder.")
 
 
-SHAPEFILE_PATH = "/home/skjor/Data/Shapefiles/US/County/cb_2023_us_county_5m.zip"
+SHAPEFILE_PATH = Path.home() / "Data" / "Shapefiles" / "US" / \
+    "County" / "cb_2023_us_county_5m.zip"
 
 
 @dataclass
