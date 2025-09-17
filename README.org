@@ -27,6 +27,19 @@ df = pd.read_parquet(Dir.clean)
 # where Dirs.clean is from the settings.py 
 #+end_src
 
+or in R:
+#+begin_src R
+library(arrow)
+
+# Point to the directory containing parquet files
+dataset <- open_dataset("path/to/parquet_dir")
+
+# Convert to a data.frame / tibble if needed
+df <- as.data.frame(dataset)
+
+#+end_src
+
+
 Column names of the parquet file:
 - FIPS :: concatenated stateid and county id,
 - GEOID :: turns out this is redundant. My shapefile came from TIGER, and I guess GEOID is the same as fip.
