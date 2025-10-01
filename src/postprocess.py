@@ -66,8 +66,11 @@ def read_shapefile_zip(zip_path):
         gdf["FIPS"] = gdf["STATEFP"].astype(str).str.zfill(
             2) + gdf["COUNTYFP"].astype(str).str.zfill(3)
 
+    elif "atlas_stco" in gdf.columns:
+        gdf["FIPS"] = gdf["atlas_stco"]
+
     # select cols
-    keep_cols = [c for c in ["FIPS", "GEOID", "geometry"] if c in gdf.columns]
+    keep_cols = [c for c in ["FIPS", "geometry"] if c in gdf.columns]
     gdf = gdf[keep_cols]
     return gdf
 
@@ -149,8 +152,8 @@ def process_prism_file(fpath, shapefile):
 
     data, profile = read_prism_zip(fpath)
     gdf_out = zonal_average(data, profile, shapefile, value_col=data_point)
-    gdf_out = gdf_out[["FIPS", "GEOID", data_point]]
-    s = gdf_out.set_index(["FIPS", "GEOID"])
+    gdf_out = gdf_out[["FIPS", data_point]]
+    s = gdf_out.set_index("FIPS")
     return s.stack()
 
 

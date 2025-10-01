@@ -20,8 +20,10 @@ def get_repo_root():
     raise RuntimeError("No .git directory found in any parent folder.")
 
 
-SHAPEFILE_PATH = Path.home() / "Data" / "Shapefiles" / "US" / \
-    "County" / "cb_2023_us_county_5m.zip"
+# SHAPEFILE_PATH = Path.home() / "Data" / "Shapefiles" / "US" / \
+#     "County" / "cb_2023_us_county_5m.zip"
+SHAPEFILE_PATH = Path.home() / "Data" / "Shapefiles" / "USDA" / \
+    "County" / "usda_county_shapefiles.zip"
 
 
 @dataclass
